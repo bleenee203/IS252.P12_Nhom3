@@ -445,7 +445,13 @@ def predict(mc, model, trainer, loader, scaler_y):
         y_hat = np.reshape(y_hat, y_true_shape)
 
    return y_true, y_hat, mask, meta_data
-
+checkpoint_callback = ModelCheckpoint(
+    monitor="val_loss",  # Metric to monitor
+    dirpath="checkpoints/",  # Directory to save checkpoints
+    filename="best-checkpoint",  # File name for the best checkpoint
+    save_top_k=1,  # Save only thee best checkpoint
+    mode="min"  # Minimize val_loss (use "max" for metrics to maximize)
+)
 # Cell
 def model_fit_predict(mc, S_df, Y_df, X_df, f_cols, evaluate_train, ds_in_val, ds_in_test):
 
