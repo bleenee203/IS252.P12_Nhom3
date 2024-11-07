@@ -28,7 +28,20 @@ from ..models.esrnn.esrnn import ESRNN
 from ..models.nbeats.nbeats import NBEATS
 from ..models.nhits.nhits import NHITS
 from ..models.transformer.autoformer import Autoformer
+from pytorch_lightning.callbacks import TQDMProgressBar,ModelCheckpoint
 
+class CustomProgressBar(TQDMProgressBar):
+    def __init__(self, refresh_rate=10):
+        super().__init__(refresh_rate=refresh_rate)
+
+    def on_train_batch_end(self, trainer, pl_module, outputs, batch, batch_idx):
+        # Custom logic here, e.g., print or log additional information
+        super().on_train_batch_end(trainer, pl_module, outputs, batch, batch_idx)
+        self.main_progress_bar.set_description(f"Batch {batch_idx} in progress")
+
+    def on_validation_epoch_end(self, trainer, pl_module):
+        # Custom end-of-epoch description or logging
+        self.main_progress_bar.set_description(f"Validation completed")
 # Cell
 def get_mask_dfs(Y_df, ds_in_val, ds_in_test):
     # train mask
@@ -457,7 +470,7 @@ def model_fit_predict(mc, S_df, Y_df, X_df, f_cols, evaluate_train, ds_in_val, d
                                                                 val_dataset=val_dataset,
                                                                 test_dataset=test_dataset)
     model = instantiate_model(mc=mc)
-    callbacks = []
+    callbacks = [CustomProgressBar(),checkpoint_callback]
     if mc['early_stop_patience']:
         early_stopping = pl.callbacks.EarlyStopping(monitor='val_loss', min_delta=1e-4,
                                                     patience=mc['early_stop_patience'],
@@ -469,10 +482,8 @@ def model_fit_predict(mc, S_df, Y_df, X_df, f_cols, evaluate_train, ds_in_val, d
     trainer = pl.Trainer(max_epochs=mc['max_epochs'],
                          max_steps=mc['max_steps'],
                          check_val_every_n_epoch=mc['eval_freq'],
-                         progress_bar_refresh_rate=1,
-                         gpus=gpus,
+                         devices="auto", accelerator="gpu",
                          callbacks=callbacks,
-                         checkpoint_callback=False,
                          logger=False)
     trainer.fit(model, train_loader, val_loader)
 
