@@ -13,6 +13,10 @@ def get_score_min_val(dir):
     min_mae = 100
     mc = {}
     for i in range(len(result)):
+      # Kiểm tra nếu thử nghiệm đã hoàn thành (status = 'ok')
+        if result.trials[i]['result'].get('status') != 'ok':
+            print(f"Skipping incomplete trial {i} with status {result.trials[i]['result'].get('status')}")
+            continue
         val_mae = result.trials[i]['result']['loss']
         if val_mae < min_mae:
             mae_best = result.trials[i]['result']['test_losses']['mae']
@@ -32,19 +36,28 @@ def main(args):
         horizons = [args.horizon]
 
     for horizon in horizons:
-        result_dir = f'./results/{args.setting}/{args.dataset}_{horizon}/{args.model}/'
-        result_dir = Path(result_dir)
-        files = list(result_dir.glob(f'hyperopt_{args.experiment}*.p'))
-        maes = []
-        mses = []
-        for file_ in files:
-            mae_data, mse_data = get_score_min_val(file_)
-            maes.append(mae_data)
-            mses.append(mse_data)
+      result_dir = f'./results/{args.setting}/{args.dataset}_{horizon}/{args.model}/'
+      result_dir = Path(result_dir)
+      files = list(result_dir.glob(f'hyperopt_eval_train.p'))
+      if not files:
+          print(f"No files found for Horizon {horizon}")
+          continue  # Skip this horizon if no files are found
 
-        print(f'Horizon {horizon}')
-        print(f'MSE: {np.mean(mses)}')
-        print(f'MAE: {np.mean(maes)}')
+      maes = []
+      mses = []
+      for file_ in files:
+          mae_data, mse_data,mc_data = get_score_min_val(file_)
+          maes.append(mae_data)
+          mses.append(mse_data)
+          if mc_data:
+            print("Best hyperparameters for this Horizon:")
+            print(mc_data)  # In ra bộ siêu tham số tốt nhất cho Horizon này
+
+      print(f'Horizon {horizon}')
+      print(f'MSE: {np.mean(mses)}')
+      print(f'MAE: {np.mean(maes)}')
+      
+
 
 def parse_args():
     desc = "Example of hyperparameter tuning"
