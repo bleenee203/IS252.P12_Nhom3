@@ -1,0 +1,24 @@
+results/multivariate/ETTm2_96/NHITS/hyperopt_eval_train.p
+Best hyperparameters for this Horizon:
+{'activation': 'ReLU', 'batch_normalization': False, 'batch_size': 1, 'complete_windows': True, 'dropout_prob_exogenous': 0, 'dropout_prob_theta': 0, 'early_stop_patience': 10, 'eval_freq': 50, 'frequency': 'H', 'idx_to_sample_freq': 1, 'initialization': 'lecun_normal', 'interpolation_mode': 'linear', 'l1_theta': 0, 'learning_rate': 0.001, 'loss_hypar': 0.5, 'loss_train': 'MAE', 'loss_valid': 'MAE', 'lr_decay': 0.5, 'max_epochs': None, 'max_steps': 1000, 'mode': 'simple', 'model': 'nhits', 'n_blocks': (1, 1, 1), 'n_freq_downsample': (40, 20, 1), 'n_hidden': 512, 'n_layers': (2, 2, 2, 2, 2, 2, 2, 2, 2), 'n_lr_decays': 3, 'n_pool_kernel_size': (2, 2, 2), 'n_s_hidden': 0, 'n_time_in': 480, 'n_time_out': 96, 'n_windows': 256, 'n_x_hidden': 0, 'normalizer_x': None, 'normalizer_y': None, 'pooling_mode': 'max', 'random_seed': 3.0, 'seasonality': 24, 'shared_weights': False, 'stack_types': ('identity', 'identity', 'identity'), 'val_idx_to_sample_freq': 1, 'weight_decay': 0, 'n_x': 0, 'n_s': 0, 'n_theta_hidden': [[512, 512], [512, 512], [512, 512]]}
+Horizon 96
+MSE: 0.17377716302871704
+MAE: 0.25423678755760193
+results/multivariate/ETTm2_192/NHITS/hyperopt_eval_train.p
+Best hyperparameters for this Horizon:
+{'activation': 'ReLU', 'batch_normalization': False, 'batch_size': 1, 'complete_windows': True, 'dropout_prob_exogenous': 0, 'dropout_prob_theta': 0, 'early_stop_patience': 10, 'eval_freq': 50, 'frequency': 'H', 'idx_to_sample_freq': 1, 'initialization': 'lecun_normal', 'interpolation_mode': 'linear', 'l1_theta': 0, 'learning_rate': 0.001, 'loss_hypar': 0.5, 'loss_train': 'MAE', 'loss_valid': 'MAE', 'lr_decay': 0.5, 'max_epochs': None, 'max_steps': 1000, 'mode': 'simple', 'model': 'nhits', 'n_blocks': (1, 1, 1), 'n_freq_downsample': (60, 8, 1), 'n_hidden': 512, 'n_layers': (2, 2, 2, 2, 2, 2, 2, 2, 2), 'n_lr_decays': 3, 'n_pool_kernel_size': (8, 4, 1), 'n_s_hidden': 0, 'n_time_in': 960, 'n_time_out': 192, 'n_windows': 256, 'n_x_hidden': 0, 'normalizer_x': None, 'normalizer_y': None, 'pooling_mode': 'max', 'random_seed': 2.0, 'seasonality': 24, 'shared_weights': False, 'stack_types': ('identity', 'identity', 'identity'), 'val_idx_to_sample_freq': 1, 'weight_decay': 0, 'n_x': 0, 'n_s': 0, 'n_theta_hidden': [[512, 512], [512, 512], [512, 512]]}
+Horizon 192
+MSE: 0.23628216981887817
+MAE: 0.3020835220813751
+results/multivariate/ETTm2_336/NHITS/hyperopt_eval_train.p
+Best hyperparameters for this Horizon:
+{'activation': 'ReLU', 'batch_normalization': False, 'batch_size': 1, 'complete_windows': True, 'dropout_prob_exogenous': 0, 'dropout_prob_theta': 0, 'early_stop_patience': 10, 'eval_freq': 50, 'frequency': 'H', 'idx_to_sample_freq': 1, 'initialization': 'lecun_normal', 'interpolation_mode': 'linear', 'l1_theta': 0, 'learning_rate': 0.001, 'loss_hypar': 0.5, 'loss_train': 'MAE', 'loss_valid': 'MAE', 'lr_decay': 0.5, 'max_epochs': None, 'max_steps': 1000, 'mode': 'simple', 'model': 'nhits', 'n_blocks': (1, 1, 1), 'n_freq_downsample': (180, 60, 1), 'n_hidden': 512, 'n_layers': (2, 2, 2, 2, 2, 2, 2, 2, 2), 'n_lr_decays': 3, 'n_pool_kernel_size': (8, 4, 1), 'n_s_hidden': 0, 'n_time_in': 1680, 'n_time_out': 336, 'n_windows': 256, 'n_x_hidden': 0, 'normalizer_x': None, 'normalizer_y': None, 'pooling_mode': 'max', 'random_seed': 6.0, 'seasonality': 24, 'shared_weights': False, 'stack_types': ('identity', 'identity', 'identity'), 'val_idx_to_sample_freq': 1, 'weight_decay': 0, 'n_x': 0, 'n_s': 0, 'n_theta_hidden': [[512, 512], [512, 512], [512, 512]]}
+Horizon 336
+MSE: 0.2924093008041382
+MAE: 0.3441305160522461
+results/multivariate/ETTm2_720/NHITS/hyperopt_eval_train.p
+Best hyperparameters for this Horizon:
+{'activation': 'ReLU', 'batch_normalization': False, 'batch_size': 1, 'complete_windows': True, 'dropout_prob_exogenous': 0, 'dropout_prob_theta': 0, 'early_stop_patience': 10, 'eval_freq': 50, 'frequency': 'H', 'idx_to_sample_freq': 1, 'initialization': 'lecun_normal', 'interpolation_mode': 'linear', 'l1_theta': 0, 'learning_rate': 0.001, 'loss_hypar': 0.5, 'loss_train': 'MAE', 'loss_valid': 'MAE', 'lr_decay': 0.5, 'max_epochs': None, 'max_steps': 1000, 'mode': 'simple', 'model': 'nhits', 'n_blocks': (1, 1, 1), 'n_freq_downsample': (168, 24, 1), 'n_hidden': 512, 'n_layers': (2, 2, 2, 2, 2, 2, 2, 2, 2), 'n_lr_decays': 3, 'n_pool_kernel_size': (4, 4, 4), 'n_s_hidden': 0, 'n_time_in': 3600, 'n_time_out': 720, 'n_windows': 256, 'n_x_hidden': 0, 'normalizer_x': None, 'normalizer_y': None, 'pooling_mode': 'max', 'random_seed': 4.0, 'seasonality': 24, 'shared_weights': False, 'stack_types': ('identity', 'identity', 'identity'), 'val_idx_to_sample_freq': 1, 'weight_decay': 0, 'n_x': 0, 'n_s': 0, 'n_theta_hidden': [[512, 512], [512, 512], [512, 512]]}
+Horizon 720
+MSE: 0.4181872010231018
+MAE: 0.43809762597084045
