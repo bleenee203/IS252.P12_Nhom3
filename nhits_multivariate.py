@@ -8,11 +8,12 @@ from hyperopt import fmin, tpe, hp, Trials, STATUS_OK
 
 from src.losses.numpy import mae, mse
 from src.experiments.utils import hyperopt_tunning
-
+#hàm tạo không gian siêu tham số
 def get_experiment_space(args):
     space= {# Architecture parameters
             'model':'nhits',
             'mode': 'simple',
+            #hp.choice() chọn giá trị ngẫu nhiên trong danh sách
             'n_time_in': hp.choice('n_time_in', [5*args.horizon]),
             'n_time_out': hp.choice('n_time_out', [args.horizon]),
             'n_x_hidden': hp.choice('n_x_hidden', [0]),
@@ -57,50 +58,55 @@ def get_experiment_space(args):
             'val_idx_to_sample_freq': hp.choice('val_idx_to_sample_freq', [1]),
             'batch_size': hp.choice('batch_size', [1]),
             'n_windows': hp.choice('n_windows', [256]),
+            #hp.quniform() chọn giá trị nguyên ngẫu nhiên trong phạm vi nhất định
             'random_seed': hp.quniform('random_seed', 1, 10, 1)}
     return space
 
 def main(args):
 
     #----------------------------------------------- Load Data -----------------------------------------------#
+    #load dữ liệu (dự đoán đơn biến?)
     Y_df = pd.read_csv(f'./data/{args.dataset}/M/df_y.csv')
 
     X_df = None
     S_df = None
 
     print('Y_df: ', Y_df.head())
+    #train: 60%, test:20%, val:20%
     if args.dataset == 'ETTm2':
         len_val = 11520
         len_test = 11520
-    if args.dataset == 'Exchange':
-        len_val = 760
-        len_test = 1517
-    if args.dataset == 'ECL':
-        len_val = 2632
-        len_test = 5260
-    if args.dataset == 'traffic':
-        len_val = 1756
-        len_test = 3508
-    if args.dataset == 'weather':
-        len_val = 5270
-        len_test = 10539
-    if args.dataset == 'ili':
-        len_val = 97
-        len_test = 193
-
+    # if args.dataset == 'Exchange':
+    #     len_val = 760
+    #     len_test = 1517
+    # if args.dataset == 'ECL':
+    #     len_val = 2632
+    #     len_test = 5260
+    # if args.dataset == 'traffic':
+    #     len_val = 1756
+    #     len_test = 3508
+    # if args.dataset == 'weather':
+    #     len_val = 5270
+    #     len_test = 10539
+    # if args.dataset == 'ili':
+    #     len_val = 97
+    #     len_test = 193
+    #tạo không gian siêu tham số
     space = get_experiment_space(args)
 
     #---------------------------------------------- Directories ----------------------------------------------#
+    #Tạo thư mục chứa kết quả
     output_dir = f'./results/multivariate/{args.dataset}_{args.horizon}/NHITS/'
 
     os.makedirs(output_dir, exist_ok = True)
     assert os.path.exists(output_dir), f'Output dir {output_dir} does not exist'
 
     hyperopt_file = output_dir + f'hyperopt_{args.experiment_id}.p'
-
+     
     if not os.path.isfile(hyperopt_file):
         print('Hyperparameter optimization')
         #----------------------------------------------- Hyperopt -----------------------------------------------#
+        #thực hiện quá trình tìm kiếm siêu tham số và huấn luyện mô hình
         trials = hyperopt_tunning(space=space, hyperopt_max_evals=args.hyperopt_max_evals, loss_function_val=mae,
                                   loss_functions_test={'mae':mae, 'mse': mse},
                                   Y_df=Y_df, X_df=X_df, S_df=S_df, f_cols=[],
@@ -110,7 +116,7 @@ def main(args):
                                   results_file = hyperopt_file,
                                   save_progress=True,
                                   loss_kwargs={})
-
+        #Lưu kết quả
         with open(hyperopt_file, "wb") as f:
             pickle.dump(trials, f)
     else:
@@ -131,10 +137,8 @@ if __name__ == '__main__':
         exit()
 
     horizons = [96, 192, 336, 720]
-    # horizons = [96]
     ILI_horizons = [24, 36, 48, 60]
     # datasets = ['ETTm2', 'Exchange', 'weather', 'ili', 'ECL', 'traffic']
-    # datasets = ['ETTm2']
     datasets = ['ETTm2']
     for dataset in datasets:
         # Horizon
@@ -153,6 +157,4 @@ if __name__ == '__main__':
 
     main(args)
 
-# source ~/anaconda3/etc/profile.d/conda.sh
-# conda activate nixtla
-# CUDA_VISIBLE_DEVICES=0 python nhits_multivariate.py --hyperopt_max_evals 10 --experiment_id "eval_train"
+

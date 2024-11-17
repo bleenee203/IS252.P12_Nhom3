@@ -161,8 +161,8 @@ if __name__ == '__main__':
     
     horizons = [96, 192, 336, 720]
     ILI_horizons = [24, 36, 48, 60]
-    datasets = ['ili', 'Exchange', 'weather', 'ETTm2', 'ECL', 'traffic']
-
+    # datasets = ['ili', 'Exchange', 'weather', 'ETTm2', 'ECL', 'traffic']
+    datasets = ['ETTm2']
     for dataset in datasets:
         # Horizon
         if dataset == 'ili':
